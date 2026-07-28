@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it as below."
+title: "walkforward-engine"
+abstract: >-
+  A bot-agnostic walk-forward analysis engine for trading strategies. Provides rolling
+  walk-forward optimization with blind out-of-sample scoring, an absolute survival gate built on
+  scale-free statistics (Probabilistic Sharpe Ratio), Monte Carlo path risk including probability
+  of ruin, and selection-overfit backstops (PBO via CSCV, and trial-deflated Sharpe).
+type: software
+authors:
+  - family-names: "Levy"
+    given-names: "Yaniv"
+repository-code: "https://github.com/oager/walkforward-engine"
+url: "https://github.com/oager/walkforward-engine"
+license: MIT
+version: "0.1.0"
+date-released: "2026-07-28"
+keywords:
+  - walk-forward analysis
+  - backtesting
+  - overfitting
+  - probabilistic sharpe ratio
+  - deflated sharpe ratio
+  - monte carlo
+  - quantitative finance
+  - out-of-sample validation

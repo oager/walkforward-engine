@@ -1,5 +1,8 @@
 # WFA Engine
 
+[![tests](https://github.com/oager/walkforward-engine/actions/workflows/tests.yml/badge.svg)](https://github.com/oager/walkforward-engine/actions/workflows/tests.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A **bot-agnostic walk-forward analysis engine** for trading strategies. Any strategy that
 implements the `BacktestAdapter` contract gets the same overfit-resistant validation: rolling
 walk-forward optimization, an absolute out-of-sample survival gate, Monte Carlo path risk, and
@@ -13,6 +16,19 @@ validation honest and lets one engine grade very different books.
 > They are **not comparable** to a per-bar baseline Sharpe, nor to an external study's per-bar
 > daily Sharpe. Never cross-compare across scales. That is why the survival gate keys on
 > scale-free **PSR** (probability true Sharpe > 0) rather than a raw Sharpe threshold.
+
+---
+
+## Scope
+
+**This engine validates strategies. It does not implement them.**
+
+There are no signals, indicators, or parameter sets in this repository, and no broker or exchange
+integrations. A strategy plugs in through an adapter that lives in its own repo, and the engine
+never imports it directly. That boundary is what keeps the validation credible: the thing being
+graded cannot reach into the grader.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for what belongs here and what does not.
 
 ---
 
@@ -165,6 +181,14 @@ tests/               pytest suite
 ## Requirements
 
 Python 3.10+, numpy, pandas, streamlit (portal only), optuna (optional, for `--search optuna`).
+
+## Contributing
+
+Issues and pull requests are welcome, particularly on validation methodology and statistical
+correctness. See [CONTRIBUTING.md](CONTRIBUTING.md) for scope and setup.
+
+If you use this in research or production, I would genuinely like to hear about it — open a
+discussion and tell me what you pointed it at.
 
 ## License
 
