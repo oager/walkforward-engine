@@ -1,0 +1,6 @@
+[Unit]
+Description=WFA rolling-PSR regime tripwire (weekly, alert-only) — posts crypto-book PSR status to Telegram
+
+[Service]
+Type=oneshot
+ExecStart=%h/mybot/.venv/bin/python %h/wfa-engine/scripts/rolling_psr_tripwire.py --notify
