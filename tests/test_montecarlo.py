@@ -11,7 +11,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import wfa.objectives as objectives
-from wfa.montecarlo import MCResult, run_mc, _resample_paths, _max_dd_rows, _ann_factor
+from wfa.montecarlo import MCResult, _ann_factor, _max_dd_rows, run_mc
 
 
 def make_trades(pnls: list[float]) -> pd.DataFrame:

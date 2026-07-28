@@ -11,7 +11,7 @@ MED runner.py:164: an IS re-run failure must not silently drop the fold from
 from __future__ import annotations
 
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pandas as pd
@@ -22,7 +22,7 @@ from wfa.runner import run_wfa
 
 
 def _dt(year: int, month: int = 1, day: int = 1) -> datetime:
-    return datetime(year, month, day, tzinfo=timezone.utc)
+    return datetime(year, month, day, tzinfo=UTC)
 
 
 class SteadyAdapter:

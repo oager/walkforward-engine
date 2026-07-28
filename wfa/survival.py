@@ -28,7 +28,7 @@ import numpy as np
 import pandas as pd
 
 from wfa.metrics import build_equity_curve, max_drawdown
-from wfa.objectives import _psr, _sharpe
+from wfa.objectives import _psr
 
 _EULER = 0.5772156649015329
 # Candidate column names that identify which asset a trade belongs to.

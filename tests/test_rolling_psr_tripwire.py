@@ -17,7 +17,6 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
-import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
@@ -535,7 +534,7 @@ def test_alert_guard_stale_detail_not_duplicated() -> None:
     txt = rpt.build_alert([R("mybot", "OK", 0.96, 119),
                            R("otherbot", "STALE_DATA", None, 24,
                              detail="data ends 2026-07-02 (17d old > 8d)")])
-    body = [l for l in txt.splitlines() if l.startswith("[STALE_DATA] otherbot")][0]
+    body = [ln for ln in txt.splitlines() if ln.startswith("[STALE_DATA] otherbot")][0]
     assert body.count("data ends 2026-07-02") == 1
 
 

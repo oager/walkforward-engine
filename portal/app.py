@@ -7,14 +7,13 @@ unless WFA_PORTAL_ALLOW_REMOTE=1 is set explicitly.
 """
 from __future__ import annotations
 
+import math
 import os
 import sys
 from collections.abc import Mapping
 from pathlib import Path
 
 import pandas as pd
-import math
-
 import plotly.graph_objects as go
 import streamlit as st
 
@@ -311,7 +310,6 @@ def render_setup_tab(cfg: dict) -> None:
 
     try:
         data_start, data_end = adapter.data_range()
-        import math
         total_months = (data_end.year - data_start.year) * 12 + (data_end.month - data_start.month)
         window = cfg["train_months"] + cfg["test_months"]
         n_folds = max(0, total_months - cfg["train_months"]) // cfg["test_months"]
