@@ -7,7 +7,6 @@ from typing import Literal, Protocol, TypedDict
 
 import pandas as pd
 
-
 ParamType = Literal["int", "float", "categorical"]
 
 
