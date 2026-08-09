@@ -8,6 +8,8 @@ This prevents the optimiser picking params that fire 0 trades and 'win' by NaN->
 """
 from __future__ import annotations
 
+from typing import Literal
+
 import logging
 import math
 from collections.abc import Callable
@@ -256,5 +258,6 @@ def compute_objective(
     if name not in OBJECTIVES:
         raise ValueError(f"Unknown objective '{name}'. Choose from: {OBJECTIVE_NAMES}")
     if len(trades) < min_trades:
+        logger.debug("Objective %s skipped: %d trades < %d min", name, len(trades), min_trades)
         return -math.inf
     return OBJECTIVES[name]["fn"](trades, equity)
