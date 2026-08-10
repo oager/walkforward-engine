@@ -10,6 +10,8 @@ from __future__ import annotations
 
 from typing import Literal
 
+ObjectiveName = Literal["sharpe", "sortino", "calmar", "total_return", "win_rate", "profit_factor", "psr"]
+
 import logging
 import math
 from collections.abc import Callable
