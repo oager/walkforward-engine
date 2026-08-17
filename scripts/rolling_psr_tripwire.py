@@ -32,13 +32,20 @@ Exit codes: 0 = ran + delivered (incl. TRIPPED/WARN, secondary ERROR/STALE, and 
             1 = a PRIMARY (crypto-book) bot is ERROR (the monitor's own machinery broke);
             2 = --notify requested but Telegram delivery failed (alert printed to stdout instead).
 """
-import os, sys, json, time, argparse, logging
+import argparse
+import json
+import logging
+import os
+import sys
+import time
+
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, _ROOT)   # derive repo root from this file, not a hardcoded home
-from datetime import datetime, timedelta, timezone
-from wfa.registry import load_adapter
-from wfa.survival import evaluate_survival, SurvivalThresholds
+from datetime import UTC, datetime, timedelta
+
 from wfa.metrics import build_equity_curve, max_drawdown
+from wfa.registry import load_adapter
+from wfa.survival import SurvivalThresholds, evaluate_survival
 
 DEFAULT_BOTS = ["mybot", "samplebot-c", "otherbot"]
 
@@ -142,7 +149,7 @@ def stale_note(de):
 def _staleness_days(de, now=None):
     """Days between the newest data bar and wall-clock now (tz-naive-safe)."""
     if now is None:
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
     if getattr(de, "tzinfo", None) is None:
         now = now.replace(tzinfo=None)
     return (now - de).total_seconds() / 86400.0
@@ -380,7 +387,8 @@ def _load_env(path):
 
 def send_telegram(token, chat, text, attempts=3, backoff_s=2.0, sleep=time.sleep):
     """POST sendMessage with bounded retry; True only when Telegram confirmed ok=true."""
-    import urllib.request, urllib.parse
+    import urllib.parse
+    import urllib.request
     data = urllib.parse.urlencode({"chat_id": chat, "text": text}).encode()
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     for i in range(attempts):

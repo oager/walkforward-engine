@@ -16,7 +16,6 @@ import pandas as pd
 
 from wfa.objectives import _ann_factor
 
-
 # ── result types ──────────────────────────────────────────────────────────────
 
 @dataclass

@@ -5,7 +5,6 @@ import math
 import sys
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import pytest
 
@@ -13,16 +12,15 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from wfa.objectives import (
     OBJECTIVE_NAMES,
-    compute_objective,
+    _calmar,
+    _profit_factor,
     _sharpe,
     _sortino,
-    _calmar,
     _total_return,
     _win_rate,
-    _profit_factor,
+    compute_objective,
 )
-from wfa.search import RandomSearch, FullGrid, OptunaSearch, make_search
-
+from wfa.search import FullGrid, OptunaSearch, RandomSearch, make_search
 
 # ── helpers ───────────────────────────────────────────────────────────────────
 

@@ -5,7 +5,6 @@ previously had zero test coverage.
 """
 from __future__ import annotations
 
-import math
 import sys
 from pathlib import Path
 
@@ -21,7 +20,6 @@ from wfa.survival import (
     evaluate_survival,
     per_symbol_breakdown,
 )
-
 
 # ── helpers ───────────────────────────────────────────────────────────────────
 

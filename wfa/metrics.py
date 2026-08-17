@@ -13,12 +13,12 @@ import numpy as np
 import pandas as pd
 
 from wfa.objectives import (
+    _calmar,
+    _profit_factor,
     _sharpe,
     _sortino,
-    _calmar,
     _total_return,
     _win_rate,
-    _profit_factor,
 )
 
 logger = logging.getLogger(__name__)

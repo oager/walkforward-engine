@@ -2,18 +2,18 @@
 from __future__ import annotations
 
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from wfa.folds import Fold, generate_folds, _add_months
+from wfa.folds import _add_months, generate_folds
 
 
 def dt(year: int, month: int = 1, day: int = 1) -> datetime:
-    return datetime(year, month, day, tzinfo=timezone.utc)
+    return datetime(year, month, day, tzinfo=UTC)
 
 
 # ── _add_months ────────────────────────────────────────────────────────────────
@@ -27,13 +27,13 @@ def test_add_months_year_rollover() -> None:
 
 
 def test_add_months_clamps_day_leap() -> None:
-    base = datetime(2020, 1, 31, tzinfo=timezone.utc)
+    base = datetime(2020, 1, 31, tzinfo=UTC)
     result = _add_months(base, 1)
     assert result.day == 29  # 2020 is leap year
 
 
 def test_add_months_feb_non_leap() -> None:
-    base = datetime(2021, 1, 31, tzinfo=timezone.utc)
+    base = datetime(2021, 1, 31, tzinfo=UTC)
     result = _add_months(base, 1)
     assert result.day == 28
 
@@ -76,12 +76,12 @@ def test_first_fold_dates() -> None:
     assert first.train_start == dt(2018)
     assert first.train_end == dt(2019)
     assert first.test_start == dt(2019)
-    assert first.test_end == datetime(2019, 4, 1, tzinfo=timezone.utc)
+    assert first.test_end == datetime(2019, 4, 1, tzinfo=UTC)
 
 
 def test_incomplete_final_fold_dropped() -> None:
     # data_end at 2019-03-31 — test window 2019-01→2019-04 would overshoot
-    folds = generate_folds(dt(2018), datetime(2019, 3, 31, tzinfo=timezone.utc), 12, 3)
+    folds = generate_folds(dt(2018), datetime(2019, 3, 31, tzinfo=UTC), 12, 3)
     assert len(folds) == 0
 
 
@@ -134,7 +134,7 @@ def test_month_end_start_no_test_overlap_or_gap() -> None:
     # data_start on the 30th walks the cursor through February: the old iterated
     # cursor clamped to Feb-28 and stayed there, putting fold1.test_start one day
     # BEFORE fold0.test_end (2020-02-28 < 2020-02-29) — duplicated OOS trades.
-    folds = generate_folds(datetime(2018, 11, 30, tzinfo=timezone.utc), dt(2022), 12, 3)
+    folds = generate_folds(datetime(2018, 11, 30, tzinfo=UTC), dt(2022), 12, 3)
     assert len(folds) >= 2
     for i in range(len(folds) - 1):
         assert folds[i].test_end == folds[i + 1].test_start, (
@@ -144,7 +144,7 @@ def test_month_end_start_no_test_overlap_or_gap() -> None:
 
 
 def test_month_end_start_windows_tile_for_31st() -> None:
-    folds = generate_folds(datetime(2019, 1, 31, tzinfo=timezone.utc), dt(2023), 12, 3)
+    folds = generate_folds(datetime(2019, 1, 31, tzinfo=UTC), dt(2023), 12, 3)
     assert len(folds) >= 2
     for i in range(len(folds) - 1):
         assert folds[i].test_end == folds[i + 1].test_start
