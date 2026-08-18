@@ -193,3 +193,8 @@ discussion and tell me what you pointed it at.
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+
+## Add a runnable example adapter under examples/
+
+Documentation reference and guidelines for #1.
